@@ -13,6 +13,7 @@ Requirements:
 Notes:
 - The control object is a 17-DOF CDM (see the attached figure for details), in which the movement of guide rail and manipulator is realized by the rotation of motors. 
 - Communication equipment : Kvaser Leaf Light V2 CAN Bus Analyzer 
-- Driving equipment : Maxon DC motor, MLDS3605-C DC servo driver 
+- Driving equipment : Maxon DC motor, MLDS3605-C DC servo driver
+- Working parameter : DC 30V/15A
 - Control system : Windows11 Matlab R2022b
  
