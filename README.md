@@ -1,19 +1,18 @@
-README for MyMATLABScript
+README for CDMrunscript
  
 This file contains a MATLAB script that can realize the motion control of CDM.
  
 Usage Instructions:
 1. Open MATLAB and navigate to the directory containing this script.
-2. Run the script by typing 'MyScript' (without the quotes) at the MATLAB command prompt.
+2. Run the script by typing 'CDMrun' (without the quotes) at the MATLAB command prompt.
  
 Requirements:
-- MATLAB version R2019b or newer
+- MATLAB version R2022b or newer
 - Any additional toolboxes or dependencies required by the script
  
 Notes:
-- The script assumes that you have a file named 'inputData.mat' in the same directory.
-- The output of the script will be saved in a file named 'outputResult.mat'.
+- The control object is a 17-DOF CDM (see the attached figure for details), in which the movement of guide rail and manipulator is realized by the rotation of motors. 
+- Communication equipment : Kvaser Leaf Light V2 CAN Bus Analyzer 
+- Driving equipment : Maxon DC motor, MLDS3605-C DC servo driver 
+- Control system : Windows11 Matlab R2022b
  
-Version History:
-- 1.0: Initial release
-- 1.1: Added support for newer MATLAB version
