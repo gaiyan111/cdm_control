@@ -17,7 +17,6 @@ RRTree = [RRTree; start 1];
 failedAttempts = 0;
 pathFound = false;
 rng('shuffle')
-%% 循环
 while failedAttempts <= maxFailedAttempts  % loop to grow RRTs
     %% chooses a random configuration
     if rand < 0.5
@@ -63,7 +62,7 @@ if display && pathFound, plot3([closestNode(1);goal(1)],[closestNode(2);goal(2)]
 if display, disp('click/press any key'); waitforbuttonpress; end
 if ~pathFound, error('no path found. maximum attempts reached'); end
 
-%% retrieve path from parent information回溯轨迹
+%% retrieve path from parent information
 path = goal;
 prev = I(1);
 while prev > 0
@@ -71,9 +70,9 @@ while prev > 0
     prev = RRTree(prev,4);
 end
 pathLength = 0;
-path = round(path,1);%保留一位小数
+path = round(path,1);
 q = size(path,1);
-path = path(2:q,:);   %去掉第一个点
+path = path(2:q,:);   
 for i=1:length(path(:,1))-1, pathLength = pathLength + distanceCost(path(i,1:3),path(i+1,1:3)); end % calculate path length
 plot3(path(:,1),path(:,2),path(:,3),'--','LineWidth',2.5,'color','b');
 fprintf('processing time=%d \nPath Length=%d \n\n', toc, pathLength); 
@@ -82,28 +81,24 @@ ay = path(:,2)';
 az = path(:,3)';
 % plot3(ax,ay,az,'LineWidth',1,'color','r');
 %% ASTAR
-dis=zeros(size(path,1),size(path,1));%距离
-fea=zeros(size(path,1),size(path,1));%可行
+dis=zeros(size(path,1),size(path,1));
+fea=zeros(size(path,1),size(path,1));
 for j=1:size(dis,1)
     for k=1:size(dis,2)
           dis(j,k)=distanceCost(path(j,:),path(k,:));
           if ~checkPath(path(j,:),path(k,:),map,circleCenter,r),fea(j,k)=inf;end
     end   
 end
-%
 start=1;
 n=length(dis);
 Dis=dis(start,:)+dis(n,:);
-%第二个点确定
 anglecheck0=zeros(1,size(path,1));
 COS=[];
 for i=1:n
     a0 = path(1,:)-parent;
     b0 = path(i,:)-path(1,:);
     if ~checkcos(a0,b0),anglecheck0(1,i)=inf;end
-%     Cosine = getCosineSimilarity(a0,b0);
-%     Cos=acos(abs(Cosine))*180/pi;
-%     COS=[COS Cos];
+
 end
 D0 = Dis+anglecheck0+fea(1,:);
 visit=ones(1,n); visit(start)=0;
@@ -123,9 +118,8 @@ for v=1:n
 end
 visit(1:index)=0;
 x0=index;
-point=[point x0];%点的位置
+point=[point x0];
 position=1;
-%其余的点
 for p=1:n
     temp=[];
     anglecheck=zeros(1,size(path,1));
@@ -134,7 +128,6 @@ for p=1:n
         a=path(x0,:)-path(pp,:);
         b=path(q,:)-path(x0,:);
         if ~checkcos(a,b),anglecheck(1,q)=inf;end
-%         position=position+1
     end
     D = Dis+anglecheck+fea(x0,:);
     for g=1:n 
@@ -152,17 +145,13 @@ for p=1:n
     end
     x0=index;
     visit(1:index)=0;
-    point=[point x0];%点的位置
+    point=[point x0];
     if x0 == n
         break;
     end
     position=position+1
 end
-% 统计数据
 shortestpath=point;
-%% 画图
-% shortestpath=ASTAR(dis,fea,path,1,size(dis,1));
-  % 图像坐标轴可视化间隔相等  
 for p=1:length(shortestpath)
    PATH(p,:)=path(shortestpath(p),:);
    plot3(PATH(:,1),PATH(:,2),PATH(:,3),'LineWidth',2.5,'Color','r');
