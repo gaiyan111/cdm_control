@@ -1,4 +1,3 @@
-%% 清空变量 
 clear
 clc 
 fileName = 'yakeli.stl';
@@ -12,7 +11,6 @@ Originalobj=stlread(fileName);
 % circleCenter(:,2) = Originalobj.Points(:,2)+50*R;
 % circleCenter(:,3) = Originalobj.Points(:,3)-520*R;
 % r=4*R;
-%% 绘制障碍物
 circleCenter_1 = [0 0 0;0 0 4; 0 0 8;0 0 12;0 0 16;0 0 20;0 0 24; 0 0 28;0 0 32;0 0 36;0 0 40;0 0 44;
     4 0 0;4 0 4; 4 0 8;4 0 12;4 0 16;4 0 20;4 0 24; 4 0 28;4 0 32;4 0 36;4 0 40;4 0 44;
     8 0 0;8 0 4; 8 0 8;8 0 12;8 0 16;8 0 20;8 0 24; 8 0 28;8 0 32;8 0 36;8 0 40;8 0 44;
@@ -51,75 +49,45 @@ figure;
 view(3);
 map = zeros(120,80,40);
 plotstl('yakeli.STL',50,20,0,0.1);
-set(gca,'YDir','reverse');        %将x轴方向设置为反向(从上到下递增)。
+set(gca,'YDir','reverse');      
 xlabel('x');
 ylabel('y');
 zlabel('z');
 hold on;
-plotstl('yakeli.STL',50,62,0,0.1); %两个并排放
-
-%% 多个目标点
-%GG = [20 2 22;60 70 5;75 65 30;60 15 30];%目标点坐标，有多个目标点就将每个目标点坐标放在这里,第一个是起点
+plotstl('yakeli.STL',50,62,0,0.1); 
 GG = [20 2 22;48 27 20;70 35 15;45 65 22];
-%画出所有点
-% for i = 1:1:size(GG)
-%     plot3(GG(i,1),GG(i,2),GG(i,3),'r','Marker','o')%%线形为红色点线，标记样式为五角星)
-% 
-% 
-%     hold on
-% end
-%     plot3(GG(i,1),GG(i,2),GG(i,3),'p',...
-%     'MarkerSize',10,...        % 指定maker的大小
-%     'MarkerFaceColor','r',...  % 指定maker的内部颜色
-%     'MarkerEdgeColor','r')     % 指定maker的轮廓颜色
-
-
-%% rrt算法部分(多个单点)
-% point_num = []; apoint_num = [];
-% path = []; apath = [];
-% for k4 = 1:size(GG,1)-1
-%         start = GG(1,:);%同一个起点  
-%         goal = GG(k4+1,:);
-%         [ap,p] = RRTreal(map,start,goal,circleCenter,r);%每次找到最好路径存放在这个变量里
-%         lp = size(p,1); lap = size(ap,1);%路径点个数
-%         point_num = [point_num;lp]; apoint_num = [apoint_num;lap];
-%         path = [path;p]; apath = [apath;ap];
-% end
-
-%% rrt
 start = GG(1,:);
 goal = GG(2,:);
-[ap1,p1] = RRTreal(map,start,goal,circleCenter,r);%每次找到最好路径存放在这个变量里
-lp1 = size(p1,1); lap1 = size(ap1,1);%路径点个数
+[ap1,p1] = RRTreal(map,start,goal,circleCenter,r);
+lp1 = size(p1,1); lap1 = size(ap1,1);
 start2 = GG(2,:);
 goal2 = GG(3,:);
 parent = ap1(lap1-1,:);
-[ap2,p2] = RRTnotreal(map,start2,parent,goal2,circleCenter,r);%每次找到最好路径存放在这个变量里
+[ap2,p2] = RRTnotreal(map,start2,parent,goal2,circleCenter,r);
 
 goal3 = GG(4,:);
-[ap3,p3] = RRTreal(map,start,goal3,circleCenter,r);%每次找到最好路径存放在这个变量里
+[ap3,p3] = RRTreal(map,start,goal3,circleCenter,r);
 hold on 
 
 plot3(start(1),start(2),start(3),'o',...
-    'MarkerSize',13,...        % 指定maker的大小
-    'MarkerFaceColor',[255 174 0]/255,...  % 指定maker的内部颜色
-    'MarkerEdgeColor','k')     % 指定maker的轮廓颜色
+    'MarkerSize',13,...        
+    'MarkerFaceColor',[255 174 0]/255,... 
+    'MarkerEdgeColor','k')    
 hold on
     plot3(goal(1),goal(2),goal(3),'p',...
-    'MarkerSize',17,...        % 指定maker的大小
-    'MarkerFaceColor',[255 174 0]/255,...  % 指定maker的内部颜色
-    'MarkerEdgeColor','k')     % 指定maker的轮廓颜色
+    'MarkerSize',17,...        
+    'MarkerFaceColor',[255 174 0]/255,...  
+    'MarkerEdgeColor','k')     
 hold on
         plot3(goal2(1),goal2(2),goal2(3),'p',...
-    'MarkerSize',17,...        % 指定maker的大小
-    'MarkerFaceColor',[255 174 0]/255,...  % 指定maker的内部颜色
-    'MarkerEdgeColor','k')     % 指定maker的轮廓颜色
+    'MarkerSize',17,...        
+    'MarkerFaceColor',[255 174 0]/255,...  
+    'MarkerEdgeColor','k')    
 hold on
             plot3(goal3(1),goal3(2),goal3(3),'p',...
-    'MarkerSize',17,...        % 指定maker的大小
-    'MarkerFaceColor',[255 174 0]/255,...  % 指定maker的内部颜色
-    'MarkerEdgeColor','k')     % 指定maker的轮廓颜色
-%% 数据处理
+    'MarkerSize',17,...        
+    'MarkerFaceColor',[255 174 0]/255,...  
+    'MarkerEdgeColor','k')   
 figure; 
 view(3);
 map = zeros(120,85,40);
@@ -131,10 +99,7 @@ for i = 1:1:size(GG)
     hold on
 end
 
-set(gca,'YDir','reverse');        %将x轴方向设置为反向(从上到下递增)。
+set(gca,'YDir','reverse');   
 xlabel('x');
 ylabel('y');
 zlabel('z');
-
-points=[20 2 22;25 14 22;33.5 23 27.5;48 27 20];
-plot3(points(:,1),points(:,2),points(:,3),'-','LineWidth',2.5,'color','b');
