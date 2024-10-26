@@ -1,5 +1,4 @@
 function res = MovingAverage(input,N)
-%% input为平滑前序列(列向量和行向量均可)；N为平滑点数（奇数）；res返回平滑后的序列(默认行向量)。
 sz = max(size(input));
 n = (N-1)/2;
 res = [];
