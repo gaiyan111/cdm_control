@@ -7,10 +7,9 @@ function linksControl(joint_angles_n)
         
         qqdd1 = zeros(24,1,1);
         if key
-            for j = 1:1:size(joint_angles_n,2)/2 %¸ù¾İ´«Èë½Ç¶È¾ØÕóÅĞ¶Ï¹Ø½ÚÊı
+            for j = 1:1:size(joint_angles_n,2)/2 %æ ¹æ®ä¼ å…¥è§’åº¦çŸ©é˜µåˆ¤æ–­å…³èŠ‚æ•°
                 singleLinkControl_n(joint_angles_n(t,2*(j-1)+1),joint_angles_n(t,2*(j-1)+2),j);
             end
-%               disp(qqdd1);
               motorControl(round(qqdd1));
 
              pause(0.01);
@@ -21,71 +20,4 @@ function linksControl(joint_angles_n)
        
     end
 
-     %% »Øµ½Ô­Î»£ºÔÚ½ô¼±ÖÆ¶¯ÏÂ²»Ö´ĞĞ
-%     if key
-%         joint_angles_n = flipud(joint_angles_n);
-%         for t = 1:1:size(joint_angles_n,1)
-%             qqdd1 = zeros(24,1,1);
-%             if key
-%                 for j = 1:1:size(joint_angles_n,2)/2 %¸ù¾İ´«Èë½Ç¶È¾ØÕóÅĞ¶Ï¹Ø½ÚÊı
-%                     %disp('Õı³£ÔËĞĞ');
-%                     singleLinkControl_n(joint_angles_n(t,2*(j-1)+1),joint_angles_n(t,2*(j-1)+2),j);
-%                     %pidControl_n(joint_angles_n(t,2*(j-1)+1),joint_angles_n(t,2*(j-1)+2),j);
-%                 end
-%                 motorControl(round(qqdd1));
-%                 pause(0.25);
-% %                 qqdd1
-%             else
-%                 %disp('ÖÆ¶¯');
-%                 break;
-%             end
-%         end
-% %         for t = 1:1:length(joint_angles_n)
-% %             pause(0.5);
-% %             for j = 1:1:size(joint_angles_n,2)/2 %¸ù¾İ´«Èë½Ç¶È¾ØÕóÅĞ¶Ï¹Ø½ÚÊı       
-% %                 singleLinkControl_n(joint_angles_n(t,2*(j-1)+1),joint_angles_n(t,2*(j-1)+2),j);
-% %                 %pidControl_n(joint_angles_n(t,2*(j-1)+1),joint_angles_n(t,2*(j-1)+2),j);
-% %             end
-% %         end
-%     end
-    
-%%
-%      delta_L1 = [];
-%      %Ã¿¸ö¹Ø½Ú¸©ÑöÆ«º½¶Ô24¸ùÉşµÄÓ°Ïì
-%      for t=  1:1:length(qt)    
-%         for j = 1:1:size(qt,2)/2 %¸ù¾İ´«Èë½Ç¶È¾ØÕóÅĞ¶Ï¹Ø½ÚÊı       
-%             for i = 1:1:24 %24µç»ú
-%                 angle = cableangle_calc_n(i); %angleÓÃÀ´¼ÆËãÏßµÄ×ø±êÖµ£¨24¸öµç»úË³Ê±Õë½Ç¶È£©
-%                 %µÚj¸ö¹Ø½Ú¶Ô24¸ùÉşµÄ³¤¶ÈÓ°Ïì
-%                 delta_L1(i,j,t) = cablelength_calc_n(joint_angles_n(t,2*(j-1)+1),joint_angles_n(t,2*(j-1)+2),angle); %delta_LÎªÒ»¸ö¹Ø½ÚÉÏµÄÉş³¤±ä»¯Á¿£¬ÒÑË®Æ½Îª³õÊ¼Î»ÖÃ (¸©ÑöÆ«º½ÎªÏà¶ÔÉÏÒ»¹Ø½Ú)
-%             end        
-%         end
-%      end
-% 
-%     dddd1 = delta_L1/4*168000; %Ë¿¸Ë±ä»¯4mmÎªµç»ú×ªÒ»È¦
-%     qqdd1 = zeros(24,1,length(qt)); %24*8*n×ªÎª24*Á¬¸ËÊı*n¾ØÕó
-%     %% Èı¹Ø½Ú
-%     for link = 1:1:size(qt,2)/2
-%         for l = 1:1:3
-%             i = 8 - link + 8*(l - 1);
-%             for m = 1:1:length(qt)
-%                 %Éş×ÓÓë¹Ø½Ú¶ÔÓ¦¹ØÏµ£ºi¶ÔÓ¦µÄ¹Ø½ÚĞòºÅÎªi%8£¬¸ù²¿¹Ø½ÚĞòºÅÎª1¡£
-%                 index = 8 - mod(i,8);
-%                 %µÚ7¸ö¹Ø½Ú¶ÔÓ¦µç»úÉş³¤±ä»¯ÊÜÇ°6¸ö¹Ø½ÚÓ°Ïì
-%                 for k = 1:1:index
-%                     qqdd1(i,1,m) = qqdd1(i,1,m)+dddd1(i,k,m); 
-%                 end
-%                 qqdd1(i,1,m) = round(qqdd1(i,m));
-%             end
-%         end
-%     end
-%     %%
-%     motorControl(qqdd1);
-%     pause(15);
-%     for i = 1:1:24
-%         for m = 1:1:length(qt)
-%             qqdd2(i,1,m) = qqdd1(i,1,length(qt) - m + 1);
-%         end
-%     end
-%     motorControl(qqdd2);
 end    
